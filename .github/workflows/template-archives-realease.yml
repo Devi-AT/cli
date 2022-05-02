@@ -62,7 +62,7 @@ jobs:
       
       - name: debug
         run: |
-          echo  "-----------${GITHUB_REF##*/}------------"      
+          echo  "-----------${{github.ref_name}------------"      
       
       - name: Create Release
         uses: ncipollo/release-action@v1
@@ -72,7 +72,7 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           allowUpdates: true
           replacesArtifacts: true
-          tag: "${GITHUB_REF##*/}"
+          tag: "${{github.ref_name}}"
           
 
 #       - name: upload client artifact
