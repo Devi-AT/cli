@@ -28,12 +28,14 @@ jobs:
 
       - name: Remove and generate new archive for 'server' template
         run: |
-          cd ../server
+          ls -la
+          echo "------------------------"
+          cd templates/server
           find . -type f -name "server.zip" -delete
           zip server.zip ./* -r
 
       - name: Remove and generate new archive for 'mobile' template
         run: |
-          cd ../mobile
+          cd templates/mobile
           find . -type f -name "mobile.zip" -delete
           zip mobile.zip ./* -r
