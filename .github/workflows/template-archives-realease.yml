@@ -2,7 +2,8 @@ name: Re-archive the templates
 
 on:
   push:
-    branches: [develop]
+    tags:
+      - '*'
 
 jobs:
   # delete_the_current_artifacts:
