@@ -6,7 +6,7 @@ on:
 
 jobs:
   # delete_the_current_artifacts:
-  generate_the_current__artifacts:
+  build_the_current__artifacts:
     runs-on: ubuntu-latest
 
     strategy:
@@ -16,52 +16,91 @@ jobs:
     steps: 
       - uses: actions/checkout@v3
 
+      - name: Get current timestamp
+        id: timestamp
+        run: echo "::set-output name=timestamp::$(date +'%Y-%m-%dT%H:%M:%S')"    
+
+      - name: version
+        run: echo "::set-output name=version::${{ steps.timestamp.outputs.timestamp }}"
+        id: version          
+
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
-
-      - name: Remove and generate new archive for 'client' template
-        run: |
-          cd templates/client
-          find . -type f -name "client.zip" -delete
           
-      - name: Archive for 'client'
+      - name: Build artefact for 'client'
         uses: actions/upload-artifact@v3
         with:
-          name: client
+          name: client-${{ steps.timestamp.outputs.timestamp }}
           path: templates/client          
-
-      - name: Remove and generate new archive for 'server' template
-        run: |
-          cd templates/server
-          find . -type f -name "server.zip" -delete
           
-      - name: Archive for 'server'
+      - name: Build artefact for 'server'
         uses: actions/upload-artifact@v3
         with:
-          name: server
+          name: server-${{ steps.timestamp.outputs.timestamp }}
           path: templates/server           
-
-      - name: Remove and generate new archive for 'mobile' template
-        run: |
-          cd templates/mobile
-          find . -type f -name "mobile.zip" -delete
           
-      - name: Archive for 'mobile'
+      - name: Build artefact for 'mobile'
         uses: actions/upload-artifact@v3
         with:
-          name: mobile
-          path: templates/mobile   
+          name: mobile-${{ steps.timestamp.outputs.timestamp }}
+          path: templates/mobile 
+
+    outputs:
+      timestamp: ${{ steps.timestamp.outputs.timestamp }}
           
-  download_the_current__artifacts:
-    name: Download artifacts
+  release_the_current__artifacts:
+    name: Release artifacts
     runs-on: ubuntu-latest
-    needs: generate_the_current__artifacts
+    needs: build_the_current__artifacts
+    runs-on: [self-hosted, "${{ needs.build_the_current__artifacts.outputs.timestamp }}"]
     steps:
-      - name: Download all artifacts
-        uses: actions/download-artifact@v3  
+      # - name: Download all artifacts
+      #   uses: actions/download-artifact@v3 
         # with: 
         #   name: client
-      - name: Test artifact download
-        run: ls -R
+      # - name: Test artifact download
+      #   run: ls -R
+
+      - name: release
+        uses: actions/create-release@v1
+        id: create_release
+        with:
+          draft: false
+          prerelease: false
+          release_name: ${{ needs.build_the_current__artifacts.outputs.timestamp }}
+          tag_name: ${{ github.ref }}
+          body_path: CHANGELOG.md
+        env:
+          GITHUB_TOKEN: ${{ github.token }}  
+
+      - name: upload client artifact
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./bin/client-${{ steps.timestamp.outputs.timestamp }}
+          asset_name: client-${{ steps.timestamp.outputs.timestamp }}
+          asset_content_type: application/gzip    
+
+      - name: upload server artifact
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./bin/server-${{ steps.timestamp.outputs.timestamp }}
+          asset_name: server-${{ steps.timestamp.outputs.timestamp }}
+          asset_content_type: application/gzip              
+
+      - name: upload mobile artifact
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./bin/mobile-${{ steps.timestamp.outputs.timestamp }}
+          asset_name: mobile-${{ steps.timestamp.outputs.timestamp }}
+          asset_content_type: application/gzip              
