@@ -5,7 +5,8 @@ on:
     branches: [develop]
 
 jobs:
-  refresh_the_archived_templates:
+  # delete_the_current_artifacts:
+  generate_the_current__artifacts:
     runs-on: ubuntu-latest
 
     strategy:
@@ -24,7 +25,6 @@ jobs:
         run: |
           cd templates/client
           find . -type f -name "client.zip" -delete
-          zip client.zip ./* -r
           
       - name: Archive for 'client'
         uses: actions/upload-artifact@v3
@@ -34,11 +34,8 @@ jobs:
 
       - name: Remove and generate new archive for 'server' template
         run: |
-          ls -la
-          echo "------------------------"
           cd templates/server
           find . -type f -name "server.zip" -delete
-          zip server.zip ./* -r
           
       - name: Archive for 'server'
         uses: actions/upload-artifact@v3
@@ -50,4 +47,9 @@ jobs:
         run: |
           cd templates/mobile
           find . -type f -name "mobile.zip" -delete
-          zip mobile.zip ./* -r
+          
+      - name: Archive for 'mobile'
+        uses: actions/upload-artifact@v3
+        with:
+          name: mobile
+          path: templates/mobile          
