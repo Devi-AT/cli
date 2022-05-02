@@ -7,9 +7,12 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "engineStrict": true,
   "engines": {
     "node": ">= 16",
-    "pnpm": ">= 6"
+    "pnpm": ">= 6",
+    "yarn": "Please use pnpm",
+    "npm": "Please use pnpm"
   },
   "bin": {
     "devi": "./index.js"
