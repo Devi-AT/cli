@@ -65,6 +65,7 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           allowUpdates: true
           replacesArtifacts: true
+          tag: "Release-${{ steps.timestamp.outputs.timestamp }}"
           #body_path: CHANGELOG.md
         env:
           GITHUB_TOKEN: ${{ secrets.ACTION_GITHUB_TOKEN }} 
