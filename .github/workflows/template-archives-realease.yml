@@ -63,7 +63,7 @@ jobs:
           prerelease: false
           release_name: ${{ needs.build_the_current__artifacts.outputs.timestamp }}
           tag_name: ${{ github.ref }}
-          body_path: CHANGELOG.md
+          #body_path: CHANGELOG.md
         env:
           GITHUB_TOKEN: ${{ github.token }}  
 
