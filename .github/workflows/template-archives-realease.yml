@@ -73,7 +73,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.ACTION_GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./bin/client-${{ steps.timestamp.outputs.timestamp }}
+          asset_path: ./client-${{ steps.timestamp.outputs.timestamp }}
           asset_name: client-${{ steps.timestamp.outputs.timestamp }}
           asset_content_type: application/gzip    
 
@@ -83,7 +83,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.ACTION_GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./bin/server-${{ steps.timestamp.outputs.timestamp }}
+          asset_path: ./server-${{ steps.timestamp.outputs.timestamp }}
           asset_name: server-${{ steps.timestamp.outputs.timestamp }}
           asset_content_type: application/gzip              
 
@@ -93,6 +93,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.ACTION_GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./bin/mobile-${{ steps.timestamp.outputs.timestamp }}
+          asset_path: ./mobile-${{ steps.timestamp.outputs.timestamp }}
           asset_name: mobile-${{ steps.timestamp.outputs.timestamp }}
           asset_content_type: application/gzip              
