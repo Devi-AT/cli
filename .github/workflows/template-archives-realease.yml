@@ -52,4 +52,6 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: mobile
-          path: templates/mobile          
+          path: templates/mobile   
+          
+  download_the_current__artifacts:
