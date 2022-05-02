@@ -3,6 +3,7 @@ lockfileVersion: 5.3
 specifiers:
   '@babel/core': ^7.17.9
   chalk: ^5.0.1
+  client-zip: ^2.2.0
   eslint: ^8.14.0
   eslint-config-prettier: ^8.5.0
   eslint-plugin-prettier: ^4.0.0
@@ -10,6 +11,7 @@ specifiers:
   prettier: ^2.6.2
 
 dependencies:
+  client-zip: 2.2.0
   inquirer: 8.2.4
 
 devDependencies:
@@ -420,6 +422,10 @@ packages:
   /cli-width/3.0.0:
     resolution: {integrity: sha512-FxqpkPPwu1HjuN93Omfm4h8uIanXofW0RxVEW3k5RKx+mJJYSthzNhp32Kzxxy3YAEZ/Dc/EWN1vZRY0+kOhbw==}
     engines: {node: '>= 10'}
+    dev: false
+
+  /client-zip/2.2.0:
+    resolution: {integrity: sha512-71vYwCFSYja9OUwpP3wWbQHim81o8A2DQ0LzSGFrx5ZoBoMG1+tjCXb+iYcMHV6QRwgem5yJVO9+vdjbTAuzyQ==}
     dev: false
 
   /clone/1.0.4:

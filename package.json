@@ -39,6 +39,7 @@
     "prettier": "^2.6.2"
   },
   "dependencies": {
+    "client-zip": "^2.2.0",
     "inquirer": "^8.2.4"
   }
 }
