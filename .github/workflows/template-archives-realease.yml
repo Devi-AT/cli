@@ -53,15 +53,8 @@ jobs:
   release_the_current__artifacts:
     name: Release artifacts
     needs: build_the_current__artifacts
-    runs-on: [ubuntu-latest, "${{ needs.build_the_current__artifacts.outputs.timestamp }}"]
+    runs-on: ubuntu-latest
     steps:
-      # - name: Download all artifacts
-      #   uses: actions/download-artifact@v3 
-        # with: 
-        #   name: client
-      # - name: Test artifact download
-      #   run: ls -R
-
       - name: release
         uses: actions/create-release@v1
         id: create_release
