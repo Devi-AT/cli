@@ -1,0 +1,41 @@
+{
+  "name": "@devi/cli",
+  "version": "1.0.0",
+  "description": "Devi CLI tool to scaffold company projects",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "engines": {
+    "node": ">= 16",
+    "pnpm": ">= 6"
+  },
+  "bin": {
+    "devi": "./index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Devi-AT/cli.git"
+  },
+  "author": {
+    "email": "devi.at.service@gmail.com",
+    "name": "Devi"
+  },
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Devi-AT/cli/issues"
+  },
+  "homepage": "https://github.com/Devi-AT/cli#readme",
+  "devDependencies": {
+    "@babel/core": "^7.17.9",
+    "chalk": "^5.0.1",
+    "eslint": "^8.14.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "prettier": "^2.6.2"
+  },
+  "dependencies": {
+    "inquirer": "^8.2.4"
+  }
+}
