@@ -25,6 +25,12 @@ jobs:
           cd templates/client
           find . -type f -name "client.zip" -delete
           zip client.zip ./* -r
+          
+      - name: Archive for 'client'
+        uses: actions/upload-artifact@v3
+        with:
+          name: client
+          path: templates/client          
 
       - name: Remove and generate new archive for 'server' template
         run: |
@@ -33,6 +39,12 @@ jobs:
           cd templates/server
           find . -type f -name "server.zip" -delete
           zip server.zip ./* -r
+          
+      - name: Archive for 'server'
+        uses: actions/upload-artifact@v3
+        with:
+          name: server
+          path: templates/server           
 
       - name: Remove and generate new archive for 'mobile' template
         run: |
