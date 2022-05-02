@@ -1,0 +1,43 @@
+name: Re-archive the templates
+
+on:
+  push:
+    branches: [develop]
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [16.x]
+
+    steps: 
+      - uses: actions/checkout@v3
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'npm'
+
+      - name: Install 'pnpm' globally
+        run: npm install -g pnpm
+
+      - name: Remove and generate new archive for 'client' template
+        run: |
+          cd templates/client
+          find . -type f -name "client.zip" -delete
+          zip client.zip ./* -r
+
+      - name: Remove and generate new archive for 'server' template
+        run: |
+          cd ../server
+          find . -type f -name "server.zip" -delete
+          zip server.zip ./* -r
+
+      - name: Remove and generate new archive for 'mobile' template
+        run: |
+          cd ../mobile
+          find . -type f -name "mobile.zip" -delete
+          zip mobile.zip ./* -r
