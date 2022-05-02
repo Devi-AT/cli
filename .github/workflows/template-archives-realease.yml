@@ -58,7 +58,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       
-      - name: release
+      - name: Create Release
         uses: ncipollo/release-action@v1
         id: create_release
         with:
@@ -66,7 +66,7 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           allowUpdates: true
           replacesArtifacts: true
-          #tag: "Release-${{ steps.timestamp.outputs.timestamp }}"
+          tag: "${GITHUB_REF##*/}"
           #body_path: CHANGELOG.md
 
       - name: upload client artifact
