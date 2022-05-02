@@ -90,7 +90,7 @@ jobs:
       - name: upload mobile artifact
         uses: actions/upload-release-asset@v1
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.ACTION_GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: ./bin/mobile-${{ steps.timestamp.outputs.timestamp }}
