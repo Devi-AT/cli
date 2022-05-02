@@ -2,6 +2,7 @@ name: Re-archive the templates
 
 on:
   push:
+    branches: [develop]
     tags:
       - '*'
 
