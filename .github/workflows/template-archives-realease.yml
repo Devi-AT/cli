@@ -51,6 +51,7 @@ jobs:
       timestamp: ${{ steps.timestamp.outputs.timestamp }}
           
   release_the_current__artifacts:
+    permissions: write-all
     name: Release artifacts
     needs: build_the_current__artifacts
     runs-on: ubuntu-latest
