@@ -18,7 +18,7 @@ jobs:
 
       - name: Get current timestamp
         id: timestamp
-        run: echo "::set-output name=timestamp::$(date +'%Y-%m-%dT%H:%M:%S')"    
+        run: echo "::set-output name=timestamp::$(date +'%Y.%m.%d-T%H.%M.%S')"    
 
       - name: version
         run: echo "::set-output name=version::${{ steps.timestamp.outputs.timestamp }}"
