@@ -11,8 +11,6 @@ jobs:
     strategy:
       matrix:
         node-version: [16.x]
-        pnpm:
-          - 6.0.0
 
     steps: 
       - uses: actions/checkout@v3
@@ -21,7 +19,6 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
-          cache: 'pnpm'
 
       - name: Remove and generate new archive for 'client' template
         run: |
