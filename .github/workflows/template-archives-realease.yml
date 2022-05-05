@@ -7,7 +7,6 @@ on:
       - '*'
 
 jobs:
-  # delete_the_current_artifacts:
   build_the_current__artifacts:
     runs-on: ubuntu-latest
 
@@ -80,4 +79,5 @@ jobs:
           ls -l
           cd templates/client
           ls -l
+          echo "------------${{ needs.build_the_current__artifacts.outputs.timestamp }}---------------"
   
