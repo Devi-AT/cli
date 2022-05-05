@@ -7,77 +7,96 @@ on:
       - '*'
 
 jobs:
-  build_the_current__artifacts:
-    runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        node-version: [16.x]
-
-    steps: 
-      - uses: actions/checkout@v3
-
-      - name: Get current timestamp
-        id: timestamp
-        run: echo "::set-output name=timestamp::$(date +'%Y.%m.%d-T%H.%M.%S')"    
-
-      - name: version
-        run: echo "::set-output name=version::${{ steps.timestamp.outputs.timestamp }}"
-        id: version          
-
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v3
-        with:
-          node-version: ${{ matrix.node-version }}
-          
-      - name: Build artefact for 'client'
-        uses: actions/upload-artifact@v3
-        with:
-          name: client-${{ steps.timestamp.outputs.timestamp }}
-          path: templates/client          
-          
-      - name: Build artefact for 'server'
-        uses: actions/upload-artifact@v3
-        with:
-          name: server-${{ steps.timestamp.outputs.timestamp }}
-          path: templates/server           
-          
-      - name: Build artefact for 'mobile'
-        uses: actions/upload-artifact@v3
-        with:
-          name: mobile-${{ steps.timestamp.outputs.timestamp }}
-          path: templates/mobile 
-
-    outputs:
-      timestamp: ${{ steps.timestamp.outputs.timestamp }}
-          
-  release_the_current__artifacts:
-    permissions: write-all
-    name: Release artifacts
-    needs: build_the_current__artifacts
+  build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      
-      - name: debug
-        run: echo  "-----------${{github.ref_name}}------------"
-      
-      - name: Create Release
-        uses: ncipollo/release-action@v1
-        id: create_release
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Build
+        run: echo ${{ github.sha }} > Release.txt
+      - name: Test
+        run: cat Release.txt
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        if: startsWith(github.ref, 'refs/tags/')
         with:
-          artifacts: "templates/client/client-${{ needs.build_the_current__artifacts.outputs.timestamp }}.zip,templates/server/server-${{ needs.build_the_current__artifacts.outputs.timestamp }}.zip,templates/mobile/mobile-${{ needs.build_the_current__artifacts.outputs.timestamp }}.zip"
           token: ${{ secrets.GITHUB_TOKEN }}
-          allowUpdates: true
-          replacesArtifacts: true
-          tag: "${{github.ref_name}}"
+          files: |
+            /templates/client
+            /templates/server
+            /templates/mobile    
+
+  # build_the_current__artifacts:
+  #   runs-on: ubuntu-latest
+
+  #   strategy:
+  #     matrix:
+  #       node-version: [16.x]
+
+  #   steps: 
+  #     - uses: actions/checkout@v3
+
+  #     - name: Get current timestamp
+  #       id: timestamp
+  #       run: echo "::set-output name=timestamp::$(date +'%Y.%m.%d-T%H.%M.%S')"    
+
+  #     - name: version
+  #       run: echo "::set-output name=version::${{ steps.timestamp.outputs.timestamp }}"
+  #       id: version          
+
+  #     - name: Use Node.js ${{ matrix.node-version }}
+  #       uses: actions/setup-node@v3
+  #       with:
+  #         node-version: ${{ matrix.node-version }}
           
-      - name: debug2
-        run: |
-          echo  "-----------${{ steps.create_release.outputs.upload_url }}------------" 
-          echo  "-----------${{ steps.timestamp.outputs.timestamp }}------------" 
-          ls -l
-          cd templates/client
-          ls -l
-          echo "------------${{ needs.build_the_current__artifacts.outputs.timestamp }}---------------"
+  #     - name: Build artefact for 'client'
+  #       uses: actions/upload-artifact@v3
+  #       with:
+  #         name: client-${{ steps.timestamp.outputs.timestamp }}
+  #         path: templates/client          
+          
+  #     - name: Build artefact for 'server'
+  #       uses: actions/upload-artifact@v3
+  #       with:
+  #         name: server-${{ steps.timestamp.outputs.timestamp }}
+  #         path: templates/server           
+          
+  #     - name: Build artefact for 'mobile'
+  #       uses: actions/upload-artifact@v3
+  #       with:
+  #         name: mobile-${{ steps.timestamp.outputs.timestamp }}
+  #         path: templates/mobile 
+
+  #   outputs:
+  #     timestamp: ${{ steps.timestamp.outputs.timestamp }}
+          
+  # release_the_current__artifacts:
+  #   permissions: write-all
+  #   name: Release artifacts
+  #   needs: build_the_current__artifacts
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v2
+      
+  #     - name: debug
+  #       run: echo  "-----------${{github.ref_name}}------------"
+      
+  #     - name: Create Release
+  #       uses: ncipollo/release-action@v1
+  #       id: create_release
+  #       with:
+  #         artifacts: "templates/client/client-${{ needs.build_the_current__artifacts.outputs.timestamp }}.zip,templates/server/server-${{ needs.build_the_current__artifacts.outputs.timestamp }}.zip,templates/mobile/mobile-${{ needs.build_the_current__artifacts.outputs.timestamp }}.zip"
+  #         token: ${{ secrets.GITHUB_TOKEN }}
+  #         allowUpdates: true
+  #         replacesArtifacts: true
+  #         tag: "${{github.ref_name}}"
+          
+  #     - name: debug2
+  #       run: |
+  #         echo  "-----------${{ steps.create_release.outputs.upload_url }}------------" 
+  #         echo  "-----------${{ steps.timestamp.outputs.timestamp }}------------" 
+  #         ls -l
+  #         cd templates/client
+  #         ls -l
+  #         echo "------------${{ needs.build_the_current__artifacts.outputs.timestamp }}---------------"
   
