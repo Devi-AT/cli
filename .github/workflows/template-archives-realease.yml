@@ -66,7 +66,7 @@ jobs:
         uses: ncipollo/release-action@v1
         id: create_release
         with:
-          artifacts: "client-${{ steps.timestamp.outputs.timestamp }}.zip, server-${{ steps.timestamp.outputs.timestamp }}.zip, mobile-${{ steps.timestamp.outputs.timestamp }}.zip"
+          artifacts: "client-${{ needs.build_the_current__artifacts.outputs.timestamp }}.zip, server-${{ needs.build_the_current__artifacts.outputs.timestamp }}.zip, mobile-${{ needs.build_the_current__artifacts.outputs.timestamp }}.zip"
           token: ${{ secrets.GITHUB_TOKEN }}
           allowUpdates: true
           replacesArtifacts: true
