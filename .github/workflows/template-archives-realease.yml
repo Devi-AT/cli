@@ -74,32 +74,32 @@ jobs:
           tag: "${{github.ref_name}}"
           
 
-#       - name: upload client artifact
-#         uses: actions/upload-release-asset@v1
-#         env:
-#           GITHUB_TOKEN: ${{ secrets.ACTION_GITHUB_TOKEN }}
-#         with:
-#           upload_url: ${{ steps.create_release.outputs.upload_url }}
-#           asset_path: ./client-${{ steps.timestamp.outputs.timestamp }}
-#           asset_name: client-${{ steps.timestamp.outputs.timestamp }}
-#           asset_content_type: application/gzip    
+      - name: upload client artifact
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.ACTION_GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./client-${{ steps.timestamp.outputs.timestamp }}
+          asset_name: client-${{ steps.timestamp.outputs.timestamp }}
+          asset_content_type: application/gzip    
 
-#       - name: upload server artifact
-#         uses: actions/upload-release-asset@v1
-#         env:
-#           GITHUB_TOKEN: ${{ secrets.ACTION_GITHUB_TOKEN }}
-#         with:
-#           upload_url: ${{ steps.create_release.outputs.upload_url }}
-#           asset_path: ./server-${{ steps.timestamp.outputs.timestamp }}
-#           asset_name: server-${{ steps.timestamp.outputs.timestamp }}
-#           asset_content_type: application/gzip              
+      - name: upload server artifact
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.ACTION_GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./server-${{ steps.timestamp.outputs.timestamp }}
+          asset_name: server-${{ steps.timestamp.outputs.timestamp }}
+          asset_content_type: application/gzip              
 
-#       - name: upload mobile artifact
-#         uses: actions/upload-release-asset@v1
-#         env:
-#           GITHUB_TOKEN: ${{ secrets.ACTION_GITHUB_TOKEN }}
-#         with:
-#           upload_url: ${{ steps.create_release.outputs.upload_url }}
-#           asset_path: ./mobile-${{ steps.timestamp.outputs.timestamp }}
-#           asset_name: mobile-${{ steps.timestamp.outputs.timestamp }}
-#           asset_content_type: application/gzip              
+      - name: upload mobile artifact
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.ACTION_GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./mobile-${{ steps.timestamp.outputs.timestamp }}
+          asset_name: mobile-${{ steps.timestamp.outputs.timestamp }}
+          asset_content_type: application/gzip              
